@@ -1,21 +1,30 @@
-public class GeometricFigure
-{ 
-  private String codigo;
-  public  String Tipo;
-  private String nombre;
-
-  public int getCodigo() {
-        return codigo;
-    }
+public class Figura {
+    
+ private String codigo;
+ private String tipo;
+ private String nombre;
+ 
+ public String getCodigo() {
+  return codigo;
+ }
+     
+ public void setCodigo(String Codigo) {
+  this.codigo = codigo;
+ }
   
-    public void setCodigo(String codigo) {
-        this.codigo = codigo;
-    }
-  public int getTipo() {
-        return tipo;
-    }
+ public String getTipo() {
+  return tipo;
+ }
+   
+ public void setTipo(String Tipo) {
+ this.tipo = tipo;
+ }
   
-    public void setCodigo(String codigo) {
-        this.tipo = codigo;
-    }
-}
+ public String getNombre() {
+ return nombre;
+ }
+    
+ public void setNombre(String Nombre) {
+ this.nombre = nombre;
+ }   
+} 
