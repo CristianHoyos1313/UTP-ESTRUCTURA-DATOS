@@ -1,0 +1,134 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package estructuradatoslistadoble;
+
+/**
+ *
+ * @author utp
+ */
+public class EstructuraDatosListaDoble {
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) {
+        // TODO code application logic here
+    Lista listita=new Lista();
+        
+        int opcion=0,el;
+        do{
+            try{
+                opcion=Integer.parseInt(JoptionPane.showInputDialog(null,
+                        "1. agregar un elemnto al iicio de la lista \n 2. mostrar los datos de la lista \n 3. salir \n Menu de opciones",3));
+            
+                switch(opcion){
+                    case 1:
+                        try{
+                            el=Integer.parseInt(JoptionPane.showInputDialog(null,"ingresa el elemnto: 3";
+                            "insertando al inicio3",3));
+                            
+                           //agregando el nodo 
+                           listita.agregarAlinicio(el); 
+                        }catch (NumberFormatException n){
+                            JOptionPane.showmessageDialog(null,"error"+n.getMessage())
+                        }
+                        break;
+                    case 2:
+                        lstita.mostrarLista(); 
+                        break;
+                    case 3:
+                        break;
+                    default;
+                                     JOptionPane.showmessageDialog(null,"opcion incorrecta"+n.getMessage())
+                }
+            
+            }catch(Exception e){
+                                 JOptionPane.showmessageDialog(null,"error"+e.getMessage())
+            }
+        
+        }while(opcion!=3);
+        
+    }
+    
+}
+
+
+//--------------------------------------------------------------------------------------------------------------
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package estructuradatoslistadoble;
+
+/**
+ *
+ * @author utp
+ */
+public class Nodo {
+    // declarar datos
+    public int dato; 
+    public Nodo siguiente; // puntero enlace
+    
+    //constructor insertar al final de la lista
+    public Nodo(int d){
+          this.dato=d;  // constructor para: cuanto vamos insertar un nodo al final 
+    }  
+    
+    //constructor insertar al inicio de la lista 
+    public Nodo(int d, Nodo n){
+    
+    dato=d;
+    siguiente=n;
+    }
+    
+    
+    
+  
+}
+//----------------------------------------------------------------------------------------------------------------
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package estructuradatoslistadoble;
+
+/**
+ *
+ * @author utp
+ *
+ */
+//vamos a crear dos punteros
+public class Lista {
+
+    protected Nodo inicio, fin;// puntero para saber donde esta el inicio y el din y estan protegidos
+
+    public Lista() {
+        inicio = null;
+        fin = null;
+    }
+
+// metodo para agregar un nodo al inicio de la lista
+    public void agregarAlinicio(int elemento) {
+
+        //creando al nodo y si no hay el fin es = inicio
+        inicio = new Nodo(elemento, inicio);
+        if (fin == null) {
+            fin = inicio;
+        }
+    }
+//metodo para mostar los datos
+
+    public void mostrarLista() {
+        Nodo recorrer = inicio;
+        while (recorrer != null) {
+            System.out.println("{ " + recorrer.dato + " }---");
+            recorrer = recorrer.siguiente;
+        }
+    }
+
+}
