@@ -1,0 +1,293 @@
+FINALIDAD DE HASH?
+ La finalidad del Hash es poder proteger las contraseñas por medio de operaciones con los datos ingresados por un usurio 
+ y comparando estos con la contraseña de acceso, permitiendo a este pasar la barrera de seguridad.
+
+
+EJEMPLO HASHMAP 
+-------------
+public static void main(String[] args){
+ 
+    HashMap<String,Float> listaProductos = new HashMap<String,Float>();
+    Scanner sc = new Scanner(System.in);
+    int opcionElegida = 0;
+    float precio;
+    String codigo;
+ 
+    while (opcionElegida != 5){
+        System.out.println("Introduce el numero de la opción que quieras:");
+        System.out.println("1.- Introducir producto");
+        System.out.println("2.- Modificar precio");
+        System.out.println("3.- Mostrar todos los productos");
+        System.out.println("4.- Eliminar producto");
+        System.out.println("5.- Salir");
+        opcionElegida = sc.nextInt();
+
+        switch (opcionElegida){
+            case 1:
+                System.out.println("Introduce el códido del producto:");
+                codigo = sc.next();
+                System.out.println("Introduce el precio del producto:");
+                precio = sc.nextFloat();
+                guardarProducto(codigo, precio, listaProductos);
+                break;
+            case 2:
+                System.out.println("Introduce el códido del producto del que quieres cambiar el precio:");
+                codigo = sc.next();
+                modificaPrecio(codigo, listaProductos);
+                break;
+            case 3:
+                mostrarProductos(listaProductos);
+                break;
+            case 4:
+                System.out.println("Introduce el códido del producto que quieres eliminar:");
+                codigo = sc.next();
+                eliminaProducto(codigo, listaProductos);
+                break;
+            case 5:
+                break;   // Si la opcion es 5 no se hace nada 
+            default:
+                System.out.println("Tienes que introducir una opción valida");
+        }
+ 
+    }
+}
+ --------------------------------------------------------------------------------------------
+EJEMPLO TABLAHASH
+-----------------
+ #define NCASILLAS 100 /*Ejemplo de número de entradas en la tabla.*/
+
+typedef tLista *TablaHash;
+
+Para la cual podemos diseñar las siguientes funciones de creación y destrución: 
+
+TablaHash CrearTablaHash () 
+{
+   tLista *t;
+   register i;
+
+   t=(tLista *)malloc(NCASILLAS*sizeof(tLista));
+   if (t==NULL)
+      error("Memoria insuficiente.");
+
+   for (i=0;i<NCASILLAS;i++)
+      t[i]=crear();
+
+   return t;
+}
+
+void DestruirTablaHash (TablaHash t)
+{
+   register i;
+
+   for (i=0;i<NCASILLAS;i++)
+      destruir(t[i]);
+
+   free(t);
+} 
+
+
+Como fue mencionado anteriormente la función hash que será usada es: 
+
+int Hash (char *cad)    
+
+{
+   int valor;
+   unsigned char *c;
+
+   for (c=cad,valor=O;*c;c++)
+      valor+=(int)(*c);
+
+   return(valor%NCASILLAS);
+}
+
+Y funciones del tipo MiembroHash, InsertarHash, BorrarHash pueden ser programadas: 
+
+int MiembroHash (char *cad,TablaHash t)   
+{
+   tPosicion p;
+   int enc;	
+   int pos=Hash(cad);
+   
+   p=primero(t[pos]);
+   enc=O;
+   while (p!=fin(t[pos]) && !enc) {
+      if (strcmp(cad,elemento(p,t[pos]))==O)
+         enc=1;
+      else
+         p=siguiente(p,t[pos]);
+   }
+
+   return enc;
+}
+
+void InsertarHash (char *cad,TablaHash t)
+{
+   int pos;
+
+   if (MiembroHash(cad,t))
+      return;
+
+   pos=Hash(cad);
+   insertar(cad,primero(t[pos]),t[pos]);
+}
+
+void BorrarHash (char *cad,TablaHash t)
+{
+   tPosicion p;
+   int pos=Hash(cad);
+
+   p=primero(t[pos]);
+   while (p!=fin(t[pos]) && !strcmp(cad,elemento(p,t[pos])))
+      p=siguiente(p,t[pos]));
+
+   if (p!=fin(t[pos]))
+      borrar(p,t[pos]);
+}
+------------------------------------------------------------------------------------
+HASING CERRADO
+--------------
+define NCASILLAS 100
+#define VACIO NULL
+static char * BORRADO='''';
+
+typedef char **TablaHash;
+
+
+Para la cual podemos diseñar las siguientes funciones de creación y destrución: 
+
+
+TablaHash CrearTablaHash () 
+    
+    
+
+{
+   TablaHash t;
+   register i;
+
+   t=(TablaHash)malloc(NCASILLAS*sizeof(char *));
+   if (t==NULL) 
+      error("Memoria Insuficiente.");
+
+   for (i=0;i<NCASILLAS;i++)
+      t[i]=VACIO;
+
+   return t;
+}
+
+void DestruirTablaHash (TablaHash t) 
+    
+    
+
+{
+   register i;
+
+   for (i=O;i<NCASILLAS;i++)
+      if (t[i]!=VACIO && t[i]!=BORRADO)
+         free(t[i]);
+
+   free t;
+}
+
+
+La función hash que será usada es igual a la que ya hemos usado para la implementación del Hasing Abierto. Y funciones del tipo MiembroHash, InsertarHash, BorrarHash pueden ser programadas tal como sigue, teniendo en cuenta que en esta implementación haremos uso de un rehashing lineal. 
+
+
+int Hash (char *cad) 
+    
+    
+
+{
+   int valor;
+   unsigned char *c;	
+  
+   for (c=cad, valor=0; *c; c++)
+   	  valor += (int)*c;
+
+   return (valor%NCASILLAS);
+}
+
+int Localizar (char *x,TablaHash t) 
+    
+    
+
+
+/* Devuelve el sitio donde esta x  o donde deberia de estar. */ 
+/* No tiene en cuenta los borrados.                          */
+
+{
+   int ini,i,aux;
+
+   ini=Hash(x);
+
+   for (i=O;i<NCASILLAS;i++) {
+      aux=(ini+i)%NCASILLAS;
+      if (t[aux]==VACIO)
+         return aux;
+      if (!strcmp(t[aux],x))
+         return aux;
+   }
+   return ini;
+}
+
+int Localizar1 (char *x,TablaHash t) 
+    
+    
+
+
+/* Devuelve el sitio donde podriamos poner x  */
+
+{
+   int ini,i,aux;
+
+   ini=Hash(x);
+
+   for (i=O;i<NCASILLAS;i++) {
+      aux=(ini+i)%NCASILLAS;
+      if (t[aux]==VACIO || t[aux]==BORRADO)
+         return aux;
+      if (!strcmp(t[aux],x))
+         return aux;
+   }
+
+   return ini;
+}
+
+int MiembroHash (char *cad,TablaHash t) 
+{
+   int pos=Localizar(cad,t);
+
+   if (t[pos]==VACIO)
+      return 0;
+   else
+      return(!strcomp(t[pos],cad));
+}
+
+void InsertarHash (char *cad,TablaHash t) 
+{
+   int pos;
+
+   if (!cad) 
+      error("Cadena inexistente.");
+
+   if (!MiembroHash(cad,t)) {
+       pos=Localizar1(cad,t);
+       if (t[pos]==VACIO || t[pos]==BORRADO) {
+          t[pos]=(char *)malloc((strlen(cad)+1)*sizeof(char));
+          strcpy(t[pos],cad);
+       } else {
+          error("Tabla Llena. \n");
+       }
+   }
+}
+
+void BorrarHash (char *cad,TablaHash t) 
+{
+   int pos = Localizar(cad,t);
+
+   if (t[pos]!=VACIO && t[pos]!=BORRADO) {
+      if (!strcmp(t[pos],cad)) {
+         free(t[pos]);
+         t[pos]=BORRADO;
+      }
+   }
+}
