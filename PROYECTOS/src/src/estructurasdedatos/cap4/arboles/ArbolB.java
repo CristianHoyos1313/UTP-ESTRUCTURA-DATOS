@@ -1,7 +1,6 @@
 package estructurasdedatos.cap4.arboles;
 
 
-
 public class ArbolB {
 // llamamos el nodo
     private NodoArbolB raiz;
@@ -33,3 +32,41 @@ public class ArbolB {
         }
     }
 }
+
+___________________________________________________________________________________________________________________________
+
+package Nodos;
+
+import Arboles.ArbolB;
+
+//
+public class NodoArbolB {
+    public ArbolB hijoderecho;
+    public ArbolB hijoizquierdo;
+    public int dato;
+    
+    public void NodoArbolB (){
+        this.hijoderecho = null;
+        this.hijoizquierdo = null;
+        this.dato=0;
+    }
+}
+__________________________________________________________________________________________________________________________
+//
+public class EstructuraDeDatosArbol {
+    /**
+     *
+     * @param args
+     */
+    public static void main (String [] args) {
+    
+ArbolB nuevo = new ArbolB();
+nuevo.insertar(10);
+nuevo.insertar(23);
+nuevo.insertar(22);
+nuevo.insertar(44);
+nuevo.insertar(11);
+nuevo.orden();
+    }
+}
+//---
